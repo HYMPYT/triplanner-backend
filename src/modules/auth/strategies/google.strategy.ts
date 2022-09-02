@@ -3,8 +3,8 @@ import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20'
 
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { User } from 'src/users/entities/user.entity'
-import { GUARD_STRATEGIES } from 'src/common/enums/strategies.enum'
+import { GUARD_STRATEGIES } from 'src/common/enums/auth/strategies.enum'
+import { User } from 'src/modules/users/entities/user.entity'
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(
