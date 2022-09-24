@@ -1,37 +1,47 @@
+import { USER_ROLES, USER_STATUS } from 'src/common/enums/users/user.enum';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+	@PrimaryGeneratedColumn('uuid')
+	id?: string;
 
-  @Column({
-    type: 'varchar',
-    length: 50
-  })
-  firstName: string;
+	@Column({ unique: false, nullable: false })
+	firstName?: string;
 
-  @Column({
-    type: 'varchar',
-    length: 50
-  })
-  lastName: string;
+	@Column({ unique: false, nullable: false })
+	lastName?: string;
 
-  @Column()
-  age: number
+	@Column({ unique: false, nullable: true })
+	photoLink?: string
 
-  @Column({
-    type: 'varchar',
-    length: 100
-  })
-  email: string
+	@Column({ unique: false, nullable: true })
+	age?: number
 
-  @Column({
-    type: 'varchar',
-    length: 100
-  })
-  password: string
+	@Column({ unique: true, nullable: true })
+	email?: string
 
-  @Column()
-  role: string
+	@Column({ nullable: true })
+	password?: string
+
+	@Column({ unique: false, nullable: true })
+	providerId?: string
+
+	@Column({ unique: false, nullable: true })
+	loginProvider?: string
+
+	@Column({
+		type: 'enum',
+		enum: USER_ROLES,
+		default: USER_ROLES.USER,
+	})
+	role?: USER_ROLES
+
+	@Column({
+		type: 'enum',
+		enum: USER_STATUS,
+		default: USER_STATUS.UNAPPROVED,
+		nullable: false,
+	})
+	status?: USER_STATUS
 }

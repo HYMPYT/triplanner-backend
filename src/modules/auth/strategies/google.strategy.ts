@@ -15,9 +15,7 @@ export class GoogleStrategy extends PassportStrategy(
         super({
             clientID: configService.get<string>('GOOGLE_CLIENT_ID'),
             clientSecret: configService.get<string>('GOOGLE_SECRET'),
-            callbackURL: `${configService.get<string>(
-                'ORIGIN',
-            )}/api/auth/google/callback`,
+            callbackURL: `${configService.get<string>('ORIGIN')}/api/auth/google/callback`,
             scope: ['email', 'profile'],
         })
     }
@@ -30,9 +28,10 @@ export class GoogleStrategy extends PassportStrategy(
     ): Promise<any> {
         const user: User = {
             email: profile.emails[0].value,
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            login_provider: profile.provider,
+			firstName: profile.name.givenName,
+			lastName: profile.name.familyName,
+			photoLink: profile.photos[0].value,
+			loginProvider: profile.provider,
         }
 
         done(null, user)

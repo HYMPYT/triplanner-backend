@@ -8,5 +8,5 @@ export enum USER_STATUS {
 export enum USER_ROLES {
 	ADMIN = 'ADMIN',
 	MODERATOR = 'MODERATOR',
-	WRITER = 'WRITER',
+	USER = 'USER',
 }

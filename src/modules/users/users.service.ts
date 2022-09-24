@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { CreateUserResponseDto } from './dto/create-user-response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
@@ -7,20 +8,20 @@ import { User } from './entities/user.entity';
 export class UsersService {
     constructor(@Inject('USERS_REPOSITORY') private usersRepository: Repository<User>) { }
 
-    async create(dto: CreateUserDto): Promise<User> {
-        const user = new User()
+    async createUser(user: User): Promise<CreateUserResponseDto> {
+        try {
+            const data = await this.usersRepository.save(user)
+            return { user_id: data.id }
+        } catch(e) {
 
-        user.firstName = dto.firstName
-        user.lastName = dto.lastName
-        user.age = dto.age
-        user.email = dto.email
-        user.password = dto.password
-        user.role = dto.role
-
-        return this.usersRepository.save(user)
+        }
     }
 
-    async findOne(id: number): Promise<User> {
-        return this.usersRepository.findOneBy({ id })
+    async getUserById(id: string): Promise<User> {
+        return await this.usersRepository.findOneBy({ id })
+    }
+
+    async getUserByCustomProperty(user: Array<User>): Promise<User> {
+        return await this.usersRepository.findOne({ where: user })
     }
 }
