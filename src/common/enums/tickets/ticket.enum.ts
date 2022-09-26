@@ -1,0 +1,24 @@
+export enum TICKET_TYPE {
+    FLIGHT = 'FLIGHT',
+    RAILWAY = 'RAILWAY',
+    BUS = 'BUS',
+}
+
+export enum FLIGHT_SEAT_CLASS {
+    FIRST = 'FIRST',
+    BUSINESS = 'BUSINESS',
+    ECONOMY = 'ECONOMY',
+}
+
+export enum RAILWAY_SEAT_CLASS {
+    FIRST = 'FIRST',
+    SECOND = 'SECOND',
+}
+
+export enum RAILWAY_CARRIAGE_TYPE {
+    GENERAL = 'GENERAL',
+    OPEN_COMPARTMENT = 'OPEN_COMPARTMENT',
+    CLOSED_COMPARTMENT = 'CLOSED_COMPARTMENT',
+    SV = 'SV',
+    SUITE = 'SUITE',
+}

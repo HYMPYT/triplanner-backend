@@ -1,5 +1,6 @@
 import { USER_ROLES, USER_STATUS } from 'src/common/enums/users/user.enum';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderedTicket } from 'src/modules/tickets/modules/ordered-tickets/entities/ordered-ticket.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -44,4 +45,7 @@ export class User {
 		nullable: false,
 	})
 	status?: USER_STATUS
+
+	@OneToMany(() => OrderedTicket, (orderedTickets) => orderedTickets.user)
+    orderedTickets: OrderedTicket[]
 }
