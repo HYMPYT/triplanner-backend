@@ -21,7 +21,7 @@ export class Ticket {
 	@Column({ unique: false, nullable: true })
 	price?: number
 
-    @Column({ unique: false, nullable: true })
+    @Column({ unique: false, nullable: false })
 	ticketId?: string
 
 	@Column({

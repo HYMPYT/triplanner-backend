@@ -1,3 +1,5 @@
+import { Car } from 'src/modules/cars/entities/car.entity';
+import { Entertainment } from 'src/modules/entertainment/entities/entertainment.entity';
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -14,4 +16,10 @@ export class Company {
 
     @OneToMany(() => Ticket, (ticket) => ticket.company)
     tickets: Ticket[]
+
+	@OneToMany(() => Car, (car) => car.company)
+    cars: Car[]
+
+	@OneToMany(() => Entertainment, (entertainment) => entertainment.company)
+    entertainment: Entertainment[]
 }

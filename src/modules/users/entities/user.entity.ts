@@ -1,4 +1,5 @@
 import { USER_ROLES, USER_STATUS } from 'src/common/enums/users/user.enum';
+import { OrderedEntertainment } from 'src/modules/entertainment/modules/ordered-entertainment/entities/ordered-entertainment.entity';
 import { OrderedTicket } from 'src/modules/tickets/modules/ordered-tickets/entities/ordered-ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -48,4 +49,7 @@ export class User {
 
 	@OneToMany(() => OrderedTicket, (orderedTickets) => orderedTickets.user)
     orderedTickets: OrderedTicket[]
+
+	@OneToMany(() => OrderedEntertainment, (orderedEntertainment) => orderedEntertainment.user)
+    orderedEntertainment: OrderedEntertainment[]
 }
