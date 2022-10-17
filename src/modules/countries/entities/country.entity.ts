@@ -4,10 +4,10 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Country {
 	@PrimaryGeneratedColumn('uuid')
-	id?: string;
+	id: string;
 
 	@Column({ unique: true, nullable: false })
-	name?: string;
+	name: string;
 
     @OneToMany(() => City, (city) => city.country)
     cities: City[]

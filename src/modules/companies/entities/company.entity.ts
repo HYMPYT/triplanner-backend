@@ -6,12 +6,12 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Company {
 	@PrimaryGeneratedColumn('uuid')
-	id?: string;
+	id: string;
 
 	@Column({ unique: true, nullable: false })
-	name?: string;
+	name: string;
 
-    @Column({ unique: false, nullable: false })
+    @Column({ unique: false, nullable: true })
 	shortName?: string;
 
     @OneToMany(() => Ticket, (ticket) => ticket.company)

@@ -7,9 +7,11 @@ import { JwtStrategy } from './strategies/jwt.strategy'
 import { GoogleStrategy } from './strategies/google.strategy'
 import { GoogleModule } from './modules/google/google.module'
 import { FacebookStrategy } from './strategies/facebook.strategy'
+import { UsersModule } from '../users/users.module'
 
 @Module({
   imports: [
+    UsersModule,
     PassportModule,
     ConfigModule,
     forwardRef(() => GoogleModule),

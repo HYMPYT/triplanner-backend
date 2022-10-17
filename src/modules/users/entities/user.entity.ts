@@ -49,11 +49,11 @@ export class User {
 	status?: USER_STATUS
 
 	@OneToMany(() => OrderedTicket, (orderedTickets) => orderedTickets.user)
-    orderedTickets: OrderedTicket[]
+    orderedTickets?: OrderedTicket[]
 
 	@OneToMany(() => OrderedEntertainment, (orderedEntertainment) => orderedEntertainment.user)
-    orderedEntertainment: OrderedEntertainment[]
+    orderedEntertainment?: OrderedEntertainment[]
 
 	@OneToMany(() => OrderedStay, (orderedStay) => orderedStay.user)
-    orderedStays: OrderedStay[]
+    orderedStays?: OrderedStay[]
 }

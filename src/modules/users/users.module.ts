@@ -10,6 +10,7 @@ import { DatabaseModule } from '../database/database.module';
     ...usersProviders,
     UsersService
   ],
-  controllers: [UsersController]
+  controllers: [UsersController],
+  exports: [UsersService]
 })
 export class UsersModule { }

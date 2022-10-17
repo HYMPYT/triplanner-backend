@@ -9,14 +9,19 @@ import { UsersModule } from './users/users.module'
 import { GoogleModule } from './auth/modules/google/google.module'
 import { FacebookModule } from './auth/modules/facebook/facebook.module'
 import { PasswordEncryptorMiddleware } from 'src/middlewares/password-encryptor.middleware'
+import { CitiesModule } from './cities/cities.module'
+import { CompaniesModule } from './companies/companies.module'
+import { CountriesModule } from './countries/countries.module'
+import { TicketsModule } from './tickets/tickets.module'
 
 @Module({
     imports: [
         DatabaseModule,
         UsersModule,
-        GoogleModule,
-        FacebookModule,
-        PasswordEncryptorMiddleware,
+        CitiesModule,
+        CompaniesModule,
+        CountriesModule,
+        TicketsModule,
     ],
 })
 export class ApiModule implements NestModule {
