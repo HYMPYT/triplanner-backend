@@ -11,16 +11,17 @@ export class Ticket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column({ unique: false, nullable: false })
+	@Column({ unique: false, nullable: false, type: 'timestamp without time zone' })
 	departureTime: Date;
 
-	@Column({ unique: false, nullable: false })
+	@Column({ unique: false, nullable: false, type: 'timestamp without time zone' })
 	arrivalTime: Date;
 
 	@Column({ unique: false, nullable: false })
 	place: string
 
-	@Column({ unique: false, nullable: false })
+	//TODO Change nullable to true
+	@Column({ unique: false, nullable: true, type: 'decimal' })
 	price: number
 
 	@Column({
@@ -30,21 +31,39 @@ export class Ticket {
 	})
 	ticketType: TICKET_TYPE
 
-	@ManyToOne(() => City, (city) => city.fromTickets, { cascade: true })
+	@Column({ nullable: true })
+	fromId: string
+
+	@ManyToOne(() => City, { cascade: true })
 	from: City
 
-	@ManyToOne(() => City, (city) => city.toTickets, { cascade: true })
+	@Column({ nullable: true })
+	toId: string
+
+	@ManyToOne(() => City, { cascade: true })
 	to: City
 
-	@ManyToOne(() => Company, (company) => company.tickets, { cascade: true })
+	@Column({ nullable: true })
+	companyId: string
+
+	@ManyToOne(() => Company, { cascade: true })
 	company: Company
 
-	@ManyToOne(() => BusTicket, (busTicket) => busTicket.tickets, { cascade: true })
+	@Column({ nullable: true })
+	busTicketInfoId: string
+
+	@ManyToOne(() => BusTicket, { cascade: true })
 	busTicketInfo: BusTicket
 
-	@ManyToOne(() => FlightTicket, (flightTicket) => flightTicket.tickets, { cascade: true })
+	@Column({ nullable: true })
+	flightTicketInfoId: string
+
+	@ManyToOne(() => FlightTicket, { cascade: true })
 	flightTicketInfo: FlightTicket
 
-	@ManyToOne(() => RailwayTicket, (railwayTicket) => railwayTicket.tickets, { cascade: true })
+	@Column({ nullable: true })
+	railwayTicketInfoId: string
+
+	@ManyToOne(() => RailwayTicket, { cascade: true })
 	railwayTicketInfo: RailwayTicket
 }

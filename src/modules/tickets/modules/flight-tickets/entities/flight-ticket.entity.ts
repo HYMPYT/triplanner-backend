@@ -16,7 +16,4 @@ export class FlightTicket {
 		default: FLIGHT_SEAT_CLASS.ECONOMY,
 	})
 	classType: FLIGHT_SEAT_CLASS
-
-	@OneToMany(() => Ticket, (ticket) => ticket.flightTicketInfo)
-    tickets: Array<Ticket>
 }

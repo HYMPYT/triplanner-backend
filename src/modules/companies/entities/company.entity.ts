@@ -13,13 +13,4 @@ export class Company {
 
     @Column({ unique: false, nullable: true })
 	shortName?: string;
-
-    @OneToMany(() => Ticket, (ticket) => ticket.company)
-    tickets: Ticket[]
-
-	@OneToMany(() => Car, (car) => car.company)
-    cars: Car[]
-
-	@OneToMany(() => Entertainment, (entertainment) => entertainment.company)
-    entertainment: Entertainment[]
 }

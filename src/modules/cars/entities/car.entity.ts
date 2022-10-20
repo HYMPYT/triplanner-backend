@@ -28,12 +28,15 @@ export class Car {
 	})
 	type?: CAR_TYPE
 
-    @ManyToOne(() => City, (city) => city.cars)
-    city: City
+	@Column({ nullable: true })
+	cityId: string
 
-    @ManyToOne(() => Company, (company) => company.cars)
-    company: Company
+	@ManyToOne(() => City)
+	city: City
 
-	@OneToMany(() => Image, (image) => image.car)
-    images: Image[]
+	@Column({ nullable: true })
+	companyId: string
+
+	@ManyToOne(() => Company)
+	company: Company
 }

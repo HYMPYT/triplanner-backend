@@ -29,21 +29,9 @@ export class City {
     })
     language?: Locale
 
-    @ManyToOne(() => Country, (country) => country.cities, { cascade: true })
+    @Column({ nullable: true })
+    countryId: string
+
+    @ManyToOne(() => Country, { cascade: true })
     country: Country
-
-    @OneToMany(() => Ticket, (ticket) => ticket.from)
-    fromTickets: Ticket[]
-
-    @OneToMany(() => Ticket, (ticket) => ticket.to)
-    toTickets: Ticket[]
-
-    @OneToMany(() => Car, (car) => car.city)
-    cars: Car[]
-
-    @OneToMany(() => Entertainment, (entertainment) => entertainment.city)
-    entertainment: Entertainment[]
-
-    @OneToMany(() => Stay, (stay) => stay.city)
-    stays: Stay[]
 }

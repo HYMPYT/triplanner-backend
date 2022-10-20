@@ -5,7 +5,7 @@ import { Hotel } from '../../hotels/entities/hotel.entity';
 @Entity()
 export class Room {
 	@PrimaryGeneratedColumn('uuid')
-	id?: string;
+	id: string;
 
 	@Column({ unique: false, nullable: false })
 	beds?: number;
@@ -17,6 +17,9 @@ export class Room {
 	})
 	roomType?: HOTEL_ROOM_TYPE
 
-    @ManyToOne(() => Hotel, (hotel) => hotel.rooms)
+	@Column({ nullable: true })
+	hotelId: string
+
+    @ManyToOne(() => Hotel)
     hotel: Hotel
 }

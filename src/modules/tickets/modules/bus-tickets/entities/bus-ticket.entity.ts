@@ -8,7 +8,4 @@ export class BusTicket {
 
 	@Column({ unique: true, nullable: false })
 	number: string;
-
-	@OneToMany(() => Ticket, (ticket) => ticket.busTicketInfo)
-    tickets: Array<Ticket>
 }

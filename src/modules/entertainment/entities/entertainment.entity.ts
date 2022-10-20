@@ -20,12 +20,15 @@ export class Entertainment {
 	@Column({ unique: false, nullable: true })
 	childPrice?: number
 
-    @ManyToOne(() => City, (city) => city.entertainment)
+	@Column({ nullable: true })
+	cityId: string
+
+    @ManyToOne(() => City)
     city: City
 
-    @ManyToOne(() => Company, (company) => company.entertainment)
-    company: Company
+	@Column({ nullable: true })
+	companyId: string
 
-	@OneToMany(() => Image, (image) => image.entertainment)
-    images: Image[]
+    @ManyToOne(() => Company)
+    company: Company
 }

@@ -5,18 +5,27 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Image {
-	@PrimaryGeneratedColumn('uuid')
-	id?: string;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-	@Column({ unique: true, nullable: false })
-	imagePath?: string;
+    @Column({ unique: true, nullable: false })
+    imagePath?: string;
 
-    @ManyToOne(() => Car, (car) => car.images)
-    car?: Car
+    @Column({ nullable: true })
+    carId: string
 
-    @ManyToOne(() => Entertainment, (entertainment) => entertainment.images)
-    entertainment?: Entertainment
+    @ManyToOne(() => Car, { nullable: true })
+    car: Car
 
-    @ManyToOne(() => Hotel, (hotel) => hotel.images)
-    hotel?: Hotel
+    @Column({ nullable: true })
+    entertainmentId: string
+
+    @ManyToOne(() => Entertainment, { nullable: true })
+    entertainment: Entertainment
+
+    @Column({ nullable: true })
+    hotelId: string
+
+    @ManyToOne(() => Hotel, { nullable: true })
+    hotel: Hotel
 }

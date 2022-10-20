@@ -58,6 +58,7 @@ export const databaseProviders = [
           Image,
         ],
         synchronize: true,
+        logging: true,
       });
 
       return dataSource.initialize();

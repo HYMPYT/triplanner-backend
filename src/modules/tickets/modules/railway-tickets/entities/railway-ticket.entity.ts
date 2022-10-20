@@ -26,7 +26,4 @@ export class RailwayTicket {
 		default: RAILWAY_CARRIAGE_TYPE.OPEN_COMPARTMENT,
 	})
 	carriageType: RAILWAY_CARRIAGE_TYPE
-
-	@OneToMany(() => Ticket, (ticket) => ticket.railwayTicketInfo)
-    tickets: Array<Ticket>
 }

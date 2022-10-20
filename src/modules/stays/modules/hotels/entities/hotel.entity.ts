@@ -6,7 +6,7 @@ import { Room } from '../../rooms/entities/room.entity';
 @Entity()
 export class Hotel {
 	@PrimaryGeneratedColumn('uuid')
-	id?: string;
+	id: string;
 
 	@Column({ unique: true, nullable: false })
 	name?: string;
@@ -19,12 +19,6 @@ export class Hotel {
 
     @Column({ unique: false, nullable: false })
 	location?: string;
-
-    @OneToMany(() => Room, (room) => room.hotel)
-    rooms: Room[]
-
-    @OneToMany(() => Image, (image) => image.hotel)
-    images: Image[]
 
     @ManyToMany(() => Amenity)
     @JoinTable()

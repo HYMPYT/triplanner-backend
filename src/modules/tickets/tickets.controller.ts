@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Query, Res } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { TicketsService } from './tickets.service';
 import { Response } from 'express'
@@ -32,6 +32,26 @@ export class TicketsController {
     async getAllTickets(@Res() res: Response) {
         try {
             const tickets: Array<Ticket> = await this.ticketsService.getAllTickets()
+            res.status(HttpStatus.OK).json(tickets)
+        } catch (e) {
+            res.sendStatus(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @Get('search')
+    async search(@Query() query: {
+        fromId: string,
+        toId?: string,
+        dDate?: string,
+        rDate?: string,
+    }, @Res() res: Response) {
+        try {
+            const tickets: Array<Ticket> = await this.ticketsService.search(
+                query.fromId,
+                query.toId,
+                Date.parse(query.dDate) || 0,
+                Date.parse(query.rDate) || 0
+            )
             res.status(HttpStatus.OK).json(tickets)
         } catch (e) {
             res.sendStatus(HttpStatus.BAD_REQUEST)
