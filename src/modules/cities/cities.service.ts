@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PROVIDERS } from 'src/providers/providers.enum';
 import { Repository } from 'typeorm';
+import { Country } from '../countries/entities/country.entity';
 import { CreateCityResponseDto } from './dto/create-city-response.dto';
 import { CreateCityDto } from './dto/create-city.dto';
 import { City } from './entities/city.entity';
@@ -25,6 +26,19 @@ export class CitiesService {
                     country: true
                 }
             })
+        } catch (e) {
+            return
+        }
+    }
+
+    async getCitiesLikeName(name: string): Promise<Array<City>> {
+        try {
+            const query = this.citiesRepository.createQueryBuilder('city')
+
+            query.leftJoinAndSelect("city.country", "country")
+            query.where(`LOWER(city.name) like '${name.toLowerCase()}%'`)
+
+            return await query.getMany()
         } catch (e) {
             return
         }

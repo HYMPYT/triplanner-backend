@@ -13,4 +13,7 @@ export class Company {
 
     @Column({ unique: false, nullable: true })
 	shortName?: string;
+
+	@OneToMany(() => Ticket, (ticket) => ticket.company)
+    tickets: Array<Ticket>
 }

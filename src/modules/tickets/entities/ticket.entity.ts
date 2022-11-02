@@ -20,7 +20,6 @@ export class Ticket {
 	@Column({ unique: false, nullable: false })
 	place: string
 
-	//TODO Change nullable to true
 	@Column({ unique: false, nullable: true, type: 'decimal' })
 	price: number
 
@@ -31,38 +30,20 @@ export class Ticket {
 	})
 	ticketType: TICKET_TYPE
 
-	@Column({ nullable: true })
-	fromId: string
-
 	@ManyToOne(() => City, { cascade: true })
 	from: City
-
-	@Column({ nullable: true })
-	toId: string
 
 	@ManyToOne(() => City, { cascade: true })
 	to: City
 
-	@Column({ nullable: true })
-	companyId: string
-
 	@ManyToOne(() => Company, { cascade: true })
 	company: Company
-
-	@Column({ nullable: true })
-	busTicketInfoId: string
 
 	@ManyToOne(() => BusTicket, { cascade: true })
 	busTicketInfo: BusTicket
 
-	@Column({ nullable: true })
-	flightTicketInfoId: string
-
 	@ManyToOne(() => FlightTicket, { cascade: true })
 	flightTicketInfo: FlightTicket
-
-	@Column({ nullable: true })
-	railwayTicketInfoId: string
 
 	@ManyToOne(() => RailwayTicket, { cascade: true })
 	railwayTicketInfo: RailwayTicket

@@ -8,4 +8,7 @@ export class Country {
 
 	@Column({ unique: true, nullable: false })
 	name: string;
+
+	@OneToMany(() => City, (city) => city.country)
+    cities: Array<City>
 }

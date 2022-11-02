@@ -43,6 +43,13 @@ export class TicketsService {
         try {
             const query = this.ticketsRepository.createQueryBuilder('ticket')
 
+            query.leftJoinAndSelect("ticket.from", "city_from")
+            query.leftJoinAndSelect("ticket.to", "city_to")
+            query.leftJoinAndSelect("ticket.company", "company")
+            query.leftJoinAndSelect("ticket.busTicketInfo", "bus_ticket")
+            query.leftJoinAndSelect("ticket.flightTicketInfo", "flight_ticket")
+            query.leftJoinAndSelect("ticket.railwayTicketInfo", "railway_ticket")
+
             query.where('ticket.fromId = :from_id', { from_id: fromId })
 
             if (toId) {

@@ -29,9 +29,12 @@ export class City {
     })
     language?: Locale
 
-    @Column({ nullable: true })
-    countryId: string
-
     @ManyToOne(() => Country, { cascade: true })
     country: Country
+
+    @OneToMany(() => Ticket, (ticket) => ticket.from)
+    ticketsFrom: Array<Ticket>
+
+    @OneToMany(() => Ticket, (ticket) => ticket.to)
+    ticketsTo: Array<Ticket>
 }

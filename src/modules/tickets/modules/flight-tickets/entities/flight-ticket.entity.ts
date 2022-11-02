@@ -2,7 +2,7 @@ import { FLIGHT_SEAT_CLASS } from 'src/common/enums/tickets/ticket.enum';
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity("flight_ticket")
 export class FlightTicket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
@@ -16,4 +16,7 @@ export class FlightTicket {
 		default: FLIGHT_SEAT_CLASS.ECONOMY,
 	})
 	classType: FLIGHT_SEAT_CLASS
+
+	@OneToMany(() => Ticket, (ticket) => ticket.flightTicketInfo)
+    tickets: Array<Ticket>
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { CitiesService } from './cities.service';
 import { CreateCityResponseDto } from './dto/create-city-response.dto';
@@ -28,6 +28,16 @@ export class CitiesController {
     async getAllCities(@Res() res: Response) {
         try {
             const cities: Array<City> = await this.citiesService.getAllCities()
+            res.status(HttpStatus.OK).json(cities)
+        } catch (e) {
+            res.sendStatus(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @Get(':name')
+    async getCitiesLikeName(@Param('name') name: string, @Res() res: Response) {
+        try {
+            const cities: Array<City> = await this.citiesService.getCitiesLikeName(name)
             res.status(HttpStatus.OK).json(cities)
         } catch (e) {
             res.sendStatus(HttpStatus.BAD_REQUEST)

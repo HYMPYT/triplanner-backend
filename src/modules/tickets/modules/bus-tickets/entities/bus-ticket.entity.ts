@@ -1,11 +1,14 @@
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity("bus_ticket")
 export class BusTicket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
 	@Column({ unique: true, nullable: false })
 	number: string;
+
+	@OneToMany(() => Ticket, (ticket) => ticket.busTicketInfo)
+    tickets: Array<Ticket>
 }

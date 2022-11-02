@@ -2,7 +2,7 @@ import { RAILWAY_CARRIAGE_TYPE, RAILWAY_SEAT_CLASS } from 'src/common/enums/tick
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity("railway_ticket")
 export class RailwayTicket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
@@ -26,4 +26,7 @@ export class RailwayTicket {
 		default: RAILWAY_CARRIAGE_TYPE.OPEN_COMPARTMENT,
 	})
 	carriageType: RAILWAY_CARRIAGE_TYPE
+
+	@OneToMany(() => Ticket, (ticket) => ticket.railwayTicketInfo)
+    tickets: Array<Ticket>
 }
