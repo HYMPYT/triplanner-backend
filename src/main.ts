@@ -17,7 +17,6 @@ async function bootstrap() {
     AppModule,
     new ExpressAdapter(server),
   );
-  await app.init();
 
   app.enableCors()
 
@@ -31,6 +30,8 @@ async function bootstrap() {
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
+
+  await app.init();
 
   http.createServer(server).listen(3000);
   https.createServer(httpsOptions, server).listen(443);
