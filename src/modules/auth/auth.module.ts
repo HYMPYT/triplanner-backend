@@ -11,18 +11,18 @@ import { UsersModule } from '../users/users.module'
 
 @Module({
   imports: [
-    UsersModule,
+    forwardRef(() => UsersModule),
     PassportModule,
     ConfigModule,
     forwardRef(() => GoogleModule),
     JwtModule.registerAsync({
-			imports: [ConfigModule],
-			useFactory: (configService: ConfigService) => ({
-				secret: configService.get<string>('JWT_KEY'),
-				signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
-			}),
-			inject: [ConfigService],
-		}),
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_KEY'),
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
+      }),
+      inject: [ConfigService],
+    }),
   ],
   providers: [
     AuthService,
@@ -32,4 +32,4 @@ import { UsersModule } from '../users/users.module'
   ],
   exports: [AuthService]
 })
-export class AuthModule {}
+export class AuthModule { }

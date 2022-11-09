@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CreateUserResponseDto } from './dto/create-user-response.dto';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+    CreateUserResponseDto,
+    UpdateUserAdminFieldsInsertDto,
+    UpdateUserInsertDto,
+    UpdateUserModeratorFieldsInsertDto
+} from './dto/user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -12,8 +16,32 @@ export class UsersService {
         try {
             const data = await this.usersRepository.save(user)
             return { user_id: data.id }
-        } catch(e) {
+        } catch (e) {
+            return
+        }
+    }
 
+    async updateUser(
+        user:
+            | UpdateUserInsertDto
+            | UpdateUserModeratorFieldsInsertDto
+            | UpdateUserAdminFieldsInsertDto
+            | User,
+    ): Promise<boolean> {
+        try {
+            await this.usersRepository.save(user)
+            return true
+        } catch (e) {
+            return false
+        }
+    }
+
+    async getUserByEmail(email: string): Promise<User> {
+        try {
+            const user = await this.usersRepository.findOneByOrFail({ email })
+            return user
+        } catch (e) {
+            return
         }
     }
 
@@ -23,5 +51,14 @@ export class UsersService {
 
     async getUserByCustomProperty(user: Array<User>): Promise<User> {
         return await this.usersRepository.findOne({ where: user })
+    }
+
+    async getAllUsers(): Promise<Array<User>> {
+        try {
+            const tokens = await this.usersRepository.find()
+            return tokens
+        } catch (e) {
+            return
+        }
     }
 }

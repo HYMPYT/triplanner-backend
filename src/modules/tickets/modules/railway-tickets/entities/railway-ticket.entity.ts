@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { RAILWAY_CARRIAGE_TYPE, RAILWAY_SEAT_CLASS } from 'src/common/enums/tickets/ticket.enum';
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
@@ -7,12 +8,15 @@ export class RailwayTicket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
+	@ApiProperty({ default: '147k' })
 	@Column({ unique: true, nullable: false })
 	trainNumber: string;
 
+	@ApiProperty({ default: '10' })
     @Column({ unique: false, nullable: false })
 	carriageNumber: number;
 
+	@ApiProperty({ default: RAILWAY_SEAT_CLASS.SECOND })
 	@Column({
 		type: 'enum',
 		enum: RAILWAY_SEAT_CLASS,
@@ -20,6 +24,7 @@ export class RailwayTicket {
 	})
 	classType: RAILWAY_SEAT_CLASS
 
+	@ApiProperty({ default: RAILWAY_CARRIAGE_TYPE.OPEN_COMPARTMENT })
     @Column({
 		type: 'enum',
 		enum: RAILWAY_CARRIAGE_TYPE,

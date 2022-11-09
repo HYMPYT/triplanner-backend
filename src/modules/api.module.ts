@@ -22,6 +22,8 @@ import { TicketsModule } from './tickets/tickets.module'
         CompaniesModule,
         CountriesModule,
         TicketsModule,
+        GoogleModule,
+        FacebookModule
     ],
 })
 export class ApiModule implements NestModule {

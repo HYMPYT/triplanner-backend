@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { TICKET_TYPE } from 'src/common/enums/tickets/ticket.enum';
 import { City } from 'src/modules/cities/entities/city.entity';
 import { Company } from 'src/modules/companies/entities/company.entity';
@@ -11,18 +12,23 @@ export class Ticket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
+	@ApiProperty({ default: '2022-11-05' })
 	@Column({ unique: false, nullable: false, type: 'timestamp without time zone' })
 	departureTime: Date;
 
+	@ApiProperty({ default: '2022-11-05' })
 	@Column({ unique: false, nullable: false, type: 'timestamp without time zone' })
 	arrivalTime: Date;
 
+	@ApiProperty({ default: '4B' })
 	@Column({ unique: false, nullable: false })
 	place: string
 
+	@ApiProperty({ default: '320.50' })
 	@Column({ unique: false, nullable: true, type: 'decimal' })
 	price: number
 
+	@ApiProperty({ default: TICKET_TYPE.FLIGHT })
 	@Column({
 		type: 'enum',
 		enum: TICKET_TYPE,

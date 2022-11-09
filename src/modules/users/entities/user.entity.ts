@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { USER_ROLES, USER_STATUS } from 'src/common/enums/users/user.enum';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -6,30 +7,31 @@ export class User {
 	@PrimaryGeneratedColumn('uuid')
 	id?: string;
 
+	@ApiProperty({ default: 'john' })
 	@Column({ unique: false, nullable: false })
 	firstName?: string;
 
+	@ApiProperty({ default: 'john' })
 	@Column({ unique: false, nullable: false })
 	lastName?: string;
 
-	@Column({ unique: false, nullable: true })
-	photoLink?: string
-
-	@Column({ unique: false, nullable: true })
-	age?: number
-
+	@ApiProperty({ default: 'test22@gmail.com' })
 	@Column({ unique: true, nullable: true })
 	email?: string
 
+	@ApiProperty({ default: 'qwerty12345' })
 	@Column({ nullable: true })
 	password?: string
 
+	@ApiProperty({ default: 'uid' })
 	@Column({ unique: false, nullable: true })
 	providerId?: string
 
+	@ApiProperty({ default: 'john' })
 	@Column({ unique: false, nullable: true })
 	loginProvider?: string
 
+	@ApiProperty({ default: USER_ROLES.USER })
 	@Column({
 		type: 'enum',
 		enum: USER_ROLES,
@@ -37,6 +39,7 @@ export class User {
 	})
 	role?: USER_ROLES
 
+	@ApiProperty({ default: USER_STATUS.UNAPPROVED })
 	@Column({
 		type: 'enum',
 		enum: USER_STATUS,

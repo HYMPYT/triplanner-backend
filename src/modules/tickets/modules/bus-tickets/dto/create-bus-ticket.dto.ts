@@ -1,5 +1,6 @@
-import { Ticket } from "src/modules/tickets/entities/ticket.entity"
+import { ApiProperty } from "@nestjs/swagger"
 
 export class CreateBusTicketDto {
+    @ApiProperty({ default: '123' })
     number: string
 }

@@ -4,7 +4,7 @@ import { AuthService } from '../../auth.service'
 import { USER_STATUS } from '../../../../common/enums/users/user.enum'
 import { LOGIN_TYPE } from '../../../../common/enums/login/login.enum'
 import { CustomError } from '../../../../helpers/error.helper'
-import { CreateUserResponseDto } from 'src/modules/users/dto/create-user-response.dto'
+import { CreateUserResponseDto } from 'src/modules/users/dto/user.dto'
 
 @Injectable()
 export class FacebookService {
