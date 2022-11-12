@@ -18,12 +18,6 @@ export class FacebookController {
         private readonly configService: ConfigService,
     ) { }
 
-    @Get()
-    @UseGuards(AuthGuard('facebook'))
-    async facebookLogin(): Promise<any> {
-        return HttpStatus.OK
-    }
-
     @Get('callback')
     @UseGuards(AuthGuard('facebook'))
     async facebookLoginRedirect(
@@ -32,6 +26,7 @@ export class FacebookController {
     ): Promise<any> {
         console.log(req)
         const { token, type } = await this.facebookService.facebookLogin(req)
-        res.redirect(`${this.configService.get<string>('FRONT_ORIGIN')}/authenticate?access_token=${token}&type=${type}`)
+        res.redirect(`${this.configService.get<string>('FRONT_ORIGIN')}`)
+        // /authenticate?access_token=${token}&type=${type}
     }
 }

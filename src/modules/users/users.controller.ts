@@ -23,6 +23,7 @@ export class UsersController {
     @Post()
     async createUser(@Body() createUserRequestDto: CreateUserDto, @Res() res: Response) {
         delete createUserRequestDto.role
+        console.log(createUserRequestDto)
         const user = await this.userService.createUser(createUserRequestDto)
         if (user?.user_id) {
             res.status(HttpStatus.CREATED).json({ user_id: user?.user_id })
@@ -37,7 +38,7 @@ export class UsersController {
 	@ApiOkResponse({ type: CreateUserResponseDto })
     @ApiBearerAuth()
     @RoleAuth([USER_ROLES.ADMIN])
-    @Post()
+    @Post('moderator')
     async createModerator(@Body() createUserRequestDto: CreateUserDto, @Res() res: Response) {
         createUserRequestDto.role = USER_ROLES.MODERATOR
         const user = await this.userService.createUser(createUserRequestDto)
