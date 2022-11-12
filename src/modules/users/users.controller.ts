@@ -1,4 +1,4 @@
-import { Body, Controller, forwardRef, Get, HttpStatus, Inject, Param, Post, Put, Req, Res } from '@nestjs/common';
+import { Body, Controller, forwardRef, Get, HttpStatus, Inject, Post, Put, Req, Res } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 import { Response } from 'express'
@@ -23,6 +23,23 @@ export class UsersController {
     @Post()
     async createUser(@Body() createUserRequestDto: CreateUserDto, @Res() res: Response) {
         delete createUserRequestDto.role
+        const user = await this.userService.createUser(createUserRequestDto)
+        if (user?.user_id) {
+            res.status(HttpStatus.CREATED).json({ user_id: user?.user_id })
+        } else {
+            res.sendStatus(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @ApiCreatedResponse({ description: 'User with role moderator has been created' })
+	@ApiBadRequestResponse({ description: 'Email already using' })
+	@ApiOperation({ summary: '[ADMIN] Create moderator' })
+	@ApiOkResponse({ type: CreateUserResponseDto })
+    @ApiBearerAuth()
+    @RoleAuth([USER_ROLES.ADMIN])
+    @Post()
+    async createModerator(@Body() createUserRequestDto: CreateUserDto, @Res() res: Response) {
+        createUserRequestDto.role = USER_ROLES.MODERATOR
         const user = await this.userService.createUser(createUserRequestDto)
         if (user?.user_id) {
             res.status(HttpStatus.CREATED).json({ user_id: user?.user_id })

@@ -3,6 +3,7 @@ import { PROVIDERS } from 'src/providers/providers.enum';
 import { Brackets, Repository } from 'typeorm';
 import { CreateTicketResponseDto } from './dto/create-ticket-response.dto';
 import { CreateTicketDto } from './dto/create-ticket.dto';
+import { SearchTicketDto } from './dto/search-ticket.dto';
 import { Ticket } from './entities/ticket.entity';
 
 @Injectable()
@@ -39,39 +40,44 @@ export class TicketsService {
         }
     }
 
-    async search(fromId: string, toId?: string, dDate?: number, rDate?: number): Promise<Array<Ticket>> {
+    async search(searchDto: SearchTicketDto): Promise<Array<Ticket>> {
         try {
-            const query = this.ticketsRepository.createQueryBuilder('ticket')
+            const tableName = 'tickets'
+            const query = this.ticketsRepository.createQueryBuilder(tableName)
 
-            query.leftJoinAndSelect("ticket.from", "city_from")
-            query.leftJoinAndSelect("ticket.to", "city_to")
-            query.leftJoinAndSelect("ticket.company", "company")
-            query.leftJoinAndSelect("ticket.busTicketInfo", "bus_ticket")
-            query.leftJoinAndSelect("ticket.flightTicketInfo", "flight_ticket")
-            query.leftJoinAndSelect("ticket.railwayTicketInfo", "railway_ticket")
+            query.leftJoinAndSelect(`${tableName}.from`, "city_from")
+            query.leftJoinAndSelect(`${tableName}.to`, "city_to")
+            query.leftJoinAndSelect(`${tableName}.company`, "company")
+            query.leftJoinAndSelect(`${tableName}.busTicketInfo`, "bus_ticket")
+            query.leftJoinAndSelect(`${tableName}.flightTicketInfo`, "flight_ticket")
+            query.leftJoinAndSelect(`${tableName}.railwayTicketInfo`, "railway_ticket")
 
-            query.where('ticket.fromId = :from_id', { from_id: fromId })
+            query.where(`${tableName}.fromId = :from_id`, { from_id: searchDto.fromId })
 
-            if (toId) {
-                query.andWhere('ticket.toId = :to_id', { to_id: toId })
+            if (searchDto.type) {
+                query.andWhere(`${tableName}.ticketType = :type`, { type: searchDto.type })
             }
 
-            if (dDate && rDate) {
-                const depDate = new Date(dDate)
-                const retDate = new Date(rDate)
+            if (searchDto.toId) {
+                query.andWhere(`${tableName}.toId = :to_id`, { to_id: searchDto.toId })
+            }
+
+            if (searchDto.dDate && searchDto.rDate) {
+                const depDate = new Date(searchDto.dDate)
+                const retDate = new Date(searchDto.rDate)
 
                 query.andWhere(
                     new Brackets(query => {
                         query.where(
                             new Brackets(query => {
-                                query.where('ticket.departureTime >= :d_date_bottom and ticket.departureTime < :d_date_top', {
+                                query.where(`${tableName}.departureTime >= :d_date_bottom and ${tableName}.departureTime < :d_date_top`, {
                                     d_date_bottom: depDate,
                                     d_date_top: this.getUpperLimitOfDate(depDate)
                                 })
                             })
                         ).orWhere(
                             new Brackets(query => {
-                                query.where('ticket.departureTime >= :r_date_bottom and ticket.departureTime < :r_date_top', {
+                                query.where(`${tableName}.departureTime >= :r_date_bottom and ${tableName}.departureTime < :r_date_top`, {
                                     r_date_bottom: retDate,
                                     r_date_top: this.getUpperLimitOfDate(retDate)
                                 })
@@ -79,10 +85,10 @@ export class TicketsService {
                         )
                     })
                 )
-            } else if (dDate) {
-                const depDate = new Date(dDate)
+            } else if (searchDto.dDate) {
+                const depDate = new Date(searchDto.dDate)
 
-                query.andWhere('ticket.departureTime >= :d_date_bottom and ticket.departureTime < :d_date_top', {
+                query.andWhere(`${tableName}.departureTime >= :d_date_bottom and ${tableName}.departureTime < :d_date_top`, {
                     d_date_bottom: depDate,
                     d_date_top: this.getUpperLimitOfDate(depDate)
                 })

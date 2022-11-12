@@ -1,14 +1,24 @@
 import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { USER_ROLES } from 'src/common/enums/users/user.enum';
+import RoleAuth from 'src/guards/decorators/roles.decorator';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyResponseDto } from './dto/create-company-response.dto';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { Company } from './entities/company.entity';
 
-@Controller('companies')
+@ApiTags('Companies Service')
+@Controller('api/companies')
 export class CompaniesController {
     constructor(private readonly companiesService: CompaniesService) {}
 
+    @ApiCreatedResponse({ description: 'Company has been created' })
+	@ApiBadRequestResponse({ description: 'Company has already been created' })
+	@ApiOperation({ summary: '[ADMIN, MODERATOR] Create company' })
+	@ApiOkResponse({ type: CreateCompanyResponseDto })
+    @ApiBearerAuth()
+    @RoleAuth([USER_ROLES.ADMIN, USER_ROLES.MODERATOR])
     @Post()
     async createCompany(@Body() createCompanyDto: CreateCompanyDto, @Res() res: Response) {
         try {
@@ -24,6 +34,10 @@ export class CompaniesController {
         }
     }
 
+    @ApiOkResponse({ type: [Company] })
+	@ApiOperation({ summary: '[ADMIN, MODERATOR] Get companies' })
+	@ApiBearerAuth()
+    @RoleAuth([USER_ROLES.ADMIN, USER_ROLES.MODERATOR])
     @Get()
     async getAllCompanies(@Res() res: Response) {
         try {

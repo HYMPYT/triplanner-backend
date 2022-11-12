@@ -6,8 +6,8 @@ export class CreateRailwayTicketDto {
 	trainNumber: string
 	@ApiProperty({ default: '10' })
 	carriageNumber: number
-	@ApiProperty({ default: RAILWAY_SEAT_CLASS.SECOND })
+	@ApiProperty({ enum: RAILWAY_SEAT_CLASS, default: RAILWAY_SEAT_CLASS.SECOND })
 	classType: RAILWAY_SEAT_CLASS.SECOND
-	@ApiProperty({ default: RAILWAY_CARRIAGE_TYPE.OPEN_COMPARTMENT })
+	@ApiProperty({ enum: RAILWAY_CARRIAGE_TYPE, default: RAILWAY_CARRIAGE_TYPE.OPEN_COMPARTMENT })
 	carriageType: RAILWAY_CARRIAGE_TYPE.OPEN_COMPARTMENT
 }

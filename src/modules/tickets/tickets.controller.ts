@@ -6,17 +6,19 @@ import { CreateTicketResponseDto } from './dto/create-ticket-response.dto';
 import { Get } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { Ticket } from './entities/ticket.entity';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { ApiBearerAuth } from '@nestjs/swagger/dist';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger/dist';
 import RoleAuth from 'src/guards/decorators/roles.decorator';
 import { USER_ROLES } from 'src/common/enums/users/user.enum';
+import { SearchQueryParamsDto } from './dto/search-query-params.dto';
 
-@Controller('tickets')
+@ApiTags('Tickets Service')
+@Controller('api/tickets')
 export class TicketsController {
     constructor(private readonly ticketsService: TicketsService) { }
 
     @ApiCreatedResponse({ description: 'Ticket has been created' })
 	@ApiBadRequestResponse({ description: 'Ticket info has already been created' })
-	@ApiOperation({ summary: '[ALL] Create ticket' })
+	@ApiOperation({ summary: '[ADMIN, MODERATOR] Create ticket' })
 	@ApiOkResponse({ type: CreateTicketResponseDto })
     @ApiBearerAuth()
     @RoleAuth([USER_ROLES.ADMIN, USER_ROLES.MODERATOR])
@@ -56,19 +58,13 @@ export class TicketsController {
 	@ApiBadRequestResponse({ description: 'Wrong parameters' })
 	@ApiOperation({ summary: '[ALL] Get tickets' })
     @Get('search')
-    async search(@Query() query: {
-        fromId: string,
-        toId?: string,
-        dDate?: string,
-        rDate?: string,
-    }, @Res() res: Response) {
+    async search(@Query() query: SearchQueryParamsDto, @Res() res: Response) {
         try {
-            const tickets: Array<Ticket> = await this.ticketsService.search(
-                query.fromId,
-                query.toId,
-                Date.parse(query.dDate) || 0,
-                Date.parse(query.rDate) || 0
-            )
+            const tickets: Array<Ticket> = await this.ticketsService.search({
+                ...query,
+                dDate: Date.parse(query.dDate) || 0,
+                rDate: Date.parse(query.rDate) || 0
+            })
             res.status(HttpStatus.OK).json(tickets)
         } catch (e) {
             res.sendStatus(HttpStatus.BAD_REQUEST)

@@ -3,7 +3,7 @@ import { FLIGHT_SEAT_CLASS } from 'src/common/enums/tickets/ticket.enum';
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity("flight_ticket")
+@Entity("flight_tickets")
 export class FlightTicket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
@@ -12,7 +12,7 @@ export class FlightTicket {
 	@Column({ unique: true, nullable: false })
 	flightNumber: string;
 
-	@ApiProperty({ default: FLIGHT_SEAT_CLASS.ECONOMY })
+	@ApiProperty({ enum: FLIGHT_SEAT_CLASS, default: FLIGHT_SEAT_CLASS.ECONOMY })
 	@Column({
 		type: 'enum',
 		enum: FLIGHT_SEAT_CLASS,

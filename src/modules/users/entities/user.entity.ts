@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { USER_ROLES, USER_STATUS } from 'src/common/enums/users/user.enum';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity('users')
 export class User {
 	@PrimaryGeneratedColumn('uuid')
 	id?: string;
@@ -31,7 +31,7 @@ export class User {
 	@Column({ unique: false, nullable: true })
 	loginProvider?: string
 
-	@ApiProperty({ default: USER_ROLES.USER })
+	@ApiProperty({ enum: USER_ROLES, default: USER_ROLES.USER })
 	@Column({
 		type: 'enum',
 		enum: USER_ROLES,
@@ -39,7 +39,7 @@ export class User {
 	})
 	role?: USER_ROLES
 
-	@ApiProperty({ default: USER_STATUS.UNAPPROVED })
+	@ApiProperty({ enum: USER_STATUS, default: USER_STATUS.UNAPPROVED })
 	@Column({
 		type: 'enum',
 		enum: USER_STATUS,

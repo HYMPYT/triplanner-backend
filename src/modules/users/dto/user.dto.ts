@@ -10,7 +10,7 @@ export class CreateUserDto {
 	email: string
 	@ApiProperty({ default: 'qwerty12345' })
 	password: string
-	@ApiProperty({ default: USER_ROLES.USER })
+	@ApiProperty({ enum: USER_ROLES, default: USER_ROLES.USER })
 	role: USER_ROLES
 }
 
@@ -25,7 +25,7 @@ export class UpdateUserDto {
 	email: string
 	@ApiProperty({ default: 'qwerty12345' })
 	password: string
-	@ApiProperty({ default: USER_ROLES.USER })
+	@ApiProperty({ enum: USER_ROLES, default: USER_ROLES.USER })
 	role: USER_ROLES
 }
 export class RecoveryPasswordRequestDto {
@@ -55,7 +55,7 @@ export class CreateUserInsertDto {
 export class UpdateUserModeratorFieldsRequestDto {
 	@ApiProperty({ default: '3564a7be-7e8f-4c1a-9662-8d0418e99644' })
 	user_id: string
-	@ApiProperty({ default: USER_STATUS.ONSITE })
+	@ApiProperty({ enum: USER_STATUS, default: USER_STATUS.ONSITE })
 	status: USER_STATUS
 }
 
@@ -64,7 +64,7 @@ export class UpdateUserModeratorFieldsInsertDto extends UpdateUserModeratorField
 export class UpdateUserAdminFieldsRequestDto {
 	@ApiProperty({ default: '3564a7be-7e8f-4c1a-9662-8d0418e99644' })
 	user_id: string
-	@ApiProperty({ default: USER_ROLES.MODERATOR })
+	@ApiProperty({ enum: USER_ROLES, default: USER_ROLES.MODERATOR })
 	role: USER_ROLES.MODERATOR
 }
 

@@ -1,16 +1,17 @@
-import { Car } from 'src/modules/cars/entities/car.entity';
-import { Entertainment } from 'src/modules/entertainment/entities/entertainment.entity';
+import { ApiProperty } from '@nestjs/swagger';
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity('companies')
 export class Company {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
+	@ApiProperty({ default: 'Airbus' })
 	@Column({ unique: true, nullable: false })
 	name: string;
 
+	@ApiProperty({ default: 'Airbus', required: false })
     @Column({ unique: false, nullable: true })
 	shortName?: string;
 

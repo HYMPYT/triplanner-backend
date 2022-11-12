@@ -7,7 +7,7 @@ import { BusTicket } from '../modules/bus-tickets/entities/bus-ticket.entity';
 import { FlightTicket } from '../modules/flight-tickets/entities/flight-ticket.entity';
 import { RailwayTicket } from '../modules/railway-tickets/entities/railway-ticket.entity';
 
-@Entity()
+@Entity('tickets')
 export class Ticket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
@@ -28,7 +28,7 @@ export class Ticket {
 	@Column({ unique: false, nullable: true, type: 'decimal' })
 	price: number
 
-	@ApiProperty({ default: TICKET_TYPE.FLIGHT })
+	@ApiProperty({ enum: TICKET_TYPE, default: TICKET_TYPE.FLIGHT })
 	@Column({
 		type: 'enum',
 		enum: TICKET_TYPE,

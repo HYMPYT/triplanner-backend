@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Ticket } from 'src/modules/tickets/entities/ticket.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity("bus_ticket")
+@Entity("bus_tickets")
 export class BusTicket {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;

@@ -4,12 +4,22 @@ import { CreateCountryDto } from './dto/create-country.dto';
 import { Response } from 'express';
 import { CreateCountryResponseDto } from './dto/create-country-response.dto';
 import { Country } from './entities/country.entity';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import RoleAuth from 'src/guards/decorators/roles.decorator';
+import { USER_ROLES } from 'src/common/enums/users/user.enum';
 
-@Controller('countries')
+@ApiTags('Coutries Service')
+@Controller('api/countries')
 export class CountriesController {
 
     constructor(private readonly countriesService: CountriesService) { }
 
+	@ApiCreatedResponse({ description: 'Country has been created' })
+	@ApiBadRequestResponse({ description: 'Country has already been created' })
+	@ApiOperation({ summary: '[ADMIN, MODERATOR] Create country' })
+	@ApiOkResponse({ type: CreateCountryResponseDto })
+    @ApiBearerAuth()
+    @RoleAuth([USER_ROLES.ADMIN, USER_ROLES.MODERATOR])
     @Post()
     async createCountry(@Body() createCountryDto: CreateCountryDto, @Res() res: Response) {
         try {
@@ -26,6 +36,10 @@ export class CountriesController {
         }
     }
 
+	@ApiOkResponse({ type: [Country] })
+	@ApiOperation({ summary: '[ADMIN, MODERATOR] Get countries' })
+	@ApiBearerAuth()
+    @RoleAuth([USER_ROLES.ADMIN, USER_ROLES.MODERATOR])
     @Get()
 	async getAllCountries(@Res() res: Response) {
 		try {
