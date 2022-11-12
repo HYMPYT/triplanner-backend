@@ -26,7 +26,6 @@ export class FacebookController {
     ): Promise<any> {
         console.log(req)
         const { token, type } = await this.facebookService.facebookLogin(req)
-        res.redirect(`${this.configService.get<string>('FRONT_ORIGIN')}`)
-        // /authenticate?access_token=${token}&type=${type}
+        res.redirect(`${this.configService.get<string>('FRONT_ORIGIN')}/authenticate?access_token=${token}&type=${type}`)
     }
 }
